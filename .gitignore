@@ -1,0 +1,60 @@
+# ===================
+# General
+# ===================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+
+# ===================
+# Java / Spring Boot
+# ===================
+
+# Maven
+backend/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Eclipse / STS
+.classpath
+.project
+.settings/
+.springBeans
+.apt_generated
+.factorypath
+.sts4-cache
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# ===================
+# Node.js / React Frontend (to be added later)
+# ===================
+
+# node_modules/            ← uncomment this when frontend is added
+# build/                   ← React production build
+# .env                     ← your React environment variables
+
+# ===================
+# VSCode
+# ===================
+.vscode/
+
