@@ -1,4 +1,4 @@
-package com.Riddhi.hostel;
+package com.Hostel_Management.hostel;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
