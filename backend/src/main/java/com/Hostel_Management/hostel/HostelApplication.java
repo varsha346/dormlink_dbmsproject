@@ -1,4 +1,4 @@
-package com.Riddhi.hostel;
+package com.Hostel_Management.hostel;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
