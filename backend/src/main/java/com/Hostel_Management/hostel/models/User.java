@@ -9,9 +9,16 @@ import lombok.Data;
 @Table(name = "user")
 public class User {
 
+    public enum UserType {
+        STUDENT,
+        WARDEN,
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
 
     @NotNull
     @Enumerated(EnumType.STRING)
