@@ -11,7 +11,7 @@ public class RoomType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long typeId;
+    private Long typeId;
 
     @NotNull
     @Column(nullable = false)
