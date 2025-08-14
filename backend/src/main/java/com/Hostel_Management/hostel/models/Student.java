@@ -31,7 +31,7 @@ public class Student {
     private String contact;
 
     @ManyToOne
-    @JoinColumn(name = "room_no" ,nullable = false)
+    @JoinColumn(name = "room_no" ,nullable = true)
     private Room room;
 
     @NotNull

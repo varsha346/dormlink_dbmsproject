@@ -14,11 +14,10 @@ import lombok.NoArgsConstructor;
 public class User {
 
     public enum UserType {
-        STUDENT,
-        WARDEN,
+        Student,
+        Warden,
 
     }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;

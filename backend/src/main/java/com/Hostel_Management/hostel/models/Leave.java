@@ -15,6 +15,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Leave {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long leaveId;
