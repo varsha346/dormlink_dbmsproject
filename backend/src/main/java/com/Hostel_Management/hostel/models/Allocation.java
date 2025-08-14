@@ -9,33 +9,30 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "allocation")
 @Data
-@Table(name = "leave_table")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Leave {
+public class Allocation{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long leaveId;
+    @Column(name = "all_id")
+    private Long allId;
 
     @ManyToOne
     @JoinColumn(name = "stu_id", nullable = false)
     private Student student;
+
+    @ManyToOne
+    @JoinColumn(name = "room_no", nullable = false)
+    private Room room;
 
     @NotNull
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
 
     @NotNull
-    @Column(name = "end_date", nullable = false)
+    @Column(name = "end_date")
     private LocalDate endDate;
-
-    @NotNull
-    @Column(nullable = false)
-    private String reason;
-
-    @NotNull
-    @Column(nullable = false)
-    private String status;
 }

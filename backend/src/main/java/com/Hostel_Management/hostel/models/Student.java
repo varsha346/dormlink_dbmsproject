@@ -2,11 +2,17 @@ package com.Hostel_Management.hostel.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.util.List;
+import java.util.ArrayList;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
 @Table(name = "student")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Student {
 
     @Id
@@ -16,6 +22,9 @@ public class Student {
     @MapsId
     @JoinColumn(name = "stu_id", nullable = false)
     private User user;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Allocation> allocations = new ArrayList<>();
 
     @NotNull
     @Column(nullable = false)
