@@ -2,6 +2,7 @@ package com.Hostel_Management.hostel.Services;
 
 import com.Hostel_Management.hostel.models.User;
 import com.Hostel_Management.hostel.Repository.UserRepo;
+import com.Hostel_Management.hostel.Config.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,9 @@ public class AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtUtil jwtUtil;
+
     public String login(String email, String password) {
         // 1. Find user by email
         User user = userRepository.findByEmail(email)
@@ -29,7 +33,7 @@ public class AuthService {
         }
 
         // 3. Return token or success message
-        return "Login successful for user: " + user.getName();
+        return jwtUtil.generateToken(user.getEmail());
     }
 
     public String register(User user) {

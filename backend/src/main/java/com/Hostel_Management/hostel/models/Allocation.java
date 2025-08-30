@@ -33,6 +33,6 @@ public class Allocation{
     private LocalDate startDate;
 
     @NotNull
-    @Column(name = "end_date")
+    @Column(name = "end_date" ,nullable = false)
     private LocalDate endDate;
 }

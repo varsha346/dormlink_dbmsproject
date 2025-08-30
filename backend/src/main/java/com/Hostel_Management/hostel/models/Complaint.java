@@ -15,6 +15,12 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Complaint {
 
+    public enum ComplaintStatus {
+        Pending,
+        Processing,
+        Resolved,
+        Rejected
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long compId;
@@ -24,8 +30,9 @@ public class Complaint {
     private Student student;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private ComplaintStatus status;
 
     @NotNull
     @Column(name = "description", nullable = false)

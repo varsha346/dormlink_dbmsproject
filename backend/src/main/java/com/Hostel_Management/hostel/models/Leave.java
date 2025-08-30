@@ -15,7 +15,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class Leave {
 
-
+    public enum LeaveStatus{
+        Pending , Approved , Rejected
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long leaveId;
@@ -37,6 +39,7 @@ public class Leave {
     private String reason;
 
     @NotNull
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String status;
+    private LeaveStatus status;
 }

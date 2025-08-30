@@ -1,6 +1,7 @@
 package com.Hostel_Management.hostel.Services;
 
 import com.Hostel_Management.hostel.models.Complaint;
+import com.Hostel_Management.hostel.models.Complaint.ComplaintStatus;
 import com.Hostel_Management.hostel.Repository.ComplaintRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,10 +40,18 @@ public class ComplaintService {
         Optional<Complaint> complaintOpt = complaintRepository.findById(compId);
         if (complaintOpt.isPresent()) {
             Complaint existingComplaint = complaintOpt.get();
-            existingComplaint.setStatus(status);
+
+            try {
+                ComplaintStatus newStatus = ComplaintStatus.valueOf(status); // convert String → Enum
+                existingComplaint.setStatus(newStatus);
+            } catch (IllegalArgumentException e) {
+                throw new RuntimeException("Invalid status: " + status);
+            }
+
             return complaintRepository.save(existingComplaint);
         }
         return null;
     }
+
 }
 
