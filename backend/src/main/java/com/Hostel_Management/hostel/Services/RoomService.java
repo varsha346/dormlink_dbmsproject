@@ -24,10 +24,7 @@ public class RoomService {
         return roomRepo.findAll();
     }
 
-    // Get rooms by student id
-    public List<Room> getRoomsByStudentId(Long stuId) {
-        return roomRepo.findByAllocations_Student_StuId(stuId);
-    }
+
 
     // Get room by type
     public List<Room> getRoomsByType(Long typeId) {
@@ -113,4 +110,6 @@ public class RoomService {
         }
         roomTypeRepo.deleteById(typeId);
     }
+    //public void allocateRoom()
+
 }

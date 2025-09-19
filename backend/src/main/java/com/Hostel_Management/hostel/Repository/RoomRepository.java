@@ -12,6 +12,6 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
     // Example: Get room by student id (assuming Allocation entity links Student and Room)
 
-    List<Room> findByAllocations_Student_StuId(Long stuId);
+
 
 }

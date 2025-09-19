@@ -32,11 +32,7 @@ public class RoomRoutes {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 🔹 Get rooms by student ID
-    @GetMapping("/student/{studentId}")
-    public List<Room> getRoomsByStudentId(@PathVariable Long studentId) {
-        return roomService.getRoomsByStudentId(studentId);
-    }
+
 
     // 🔹 Get rooms by type
     @GetMapping("/type/{typeId}")
