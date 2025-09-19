@@ -19,8 +19,6 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long roomNo;
 
-    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Allocation> allocations = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "type_id", nullable = false)

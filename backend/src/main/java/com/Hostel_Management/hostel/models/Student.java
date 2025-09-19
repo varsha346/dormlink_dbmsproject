@@ -23,8 +23,6 @@ public class Student {
     @JoinColumn(name = "stu_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Allocation> allocations = new ArrayList<>();
 
     @NotNull
     @Column(nullable = false)
@@ -53,5 +51,8 @@ public class Student {
     @NotNull
     @Column(nullable = false)
     private String year;
+
+    @Version
+    private Long version;
 
 }
