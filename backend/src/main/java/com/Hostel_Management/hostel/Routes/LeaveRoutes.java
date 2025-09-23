@@ -1,10 +1,9 @@
 package com.Hostel_Management.hostel.Routes;
 
-
-import com.Hostel_Management.hostel.models.Leave;
+import com.Hostel_Management.hostel.Dto.LeaveDto;
+import com.Hostel_Management.hostel.Services.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.Hostel_Management.hostel.Services.LeaveService;
 
 import java.util.List;
 
@@ -15,37 +14,33 @@ public class LeaveRoutes {
     @Autowired
     private LeaveService leaveService;
 
-    // Create a new leave
+    // Create Leave
     @PostMapping("/add")
-    public Leave createLeave(@RequestBody Leave leave) {
-        return leaveService.addLeave(leave);
+    public LeaveDto createLeave(@RequestBody LeaveDto leaveDto) {
+        return leaveService.addLeave(leaveDto);
     }
 
-    // Get all leaves
+    // Get All Leaves
     @GetMapping("/all")
-    public List<Leave> getAllLeaves() {
+    public List<LeaveDto> getAllLeaves() {
         return leaveService.getAllLeaves();
     }
 
-
-    // Get leaves by Student ID
-    @GetMapping("/{studentId}")
-    public List<Leave> getLeavesByStudentId(@PathVariable Long studentId) {
+    // Get Leaves by Student ID
+    @GetMapping("/student/{studentId}")
+    public List<LeaveDto> getLeavesByStudent(@PathVariable Long studentId) {
         return leaveService.getLeavesByStudent(studentId);
     }
 
-    // Update a leave
+    // Update Leave
     @PutMapping("/{id}")
-    public Leave updateLeave(@PathVariable Long id, @RequestBody Leave leaveDetails) {
-        return leaveService.updateLeave(id, leaveDetails);
+    public LeaveDto updateLeave(@PathVariable Long id, @RequestBody LeaveDto leaveDto) {
+        return leaveService.updateLeave(id, leaveDto);
     }
 
-    // Delete a leave by ID
+    // Delete Leave
     @DeleteMapping("/{id}")
     public void deleteLeave(@PathVariable Long id) {
         leaveService.deleteLeave(id);
     }
-
-
 }
-

@@ -32,7 +32,6 @@ public class StudentService {
     }
 
 
-
     // ✅ Allocate room to student
     @Transactional
     public void allocateRoom(Long studentId, Long roomId) {

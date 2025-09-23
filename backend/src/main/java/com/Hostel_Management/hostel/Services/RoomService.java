@@ -38,6 +38,7 @@ public class RoomService {
         return roomRepo.findById(roomId);
     }
 
+
     // Update room
     public Room updateRoom(Long roomId, Room updatedRoom) {
         return roomRepo.findById(roomId).map(room -> {

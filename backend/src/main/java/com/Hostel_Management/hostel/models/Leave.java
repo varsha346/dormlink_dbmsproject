@@ -26,6 +26,7 @@ public class Leave {
     @JoinColumn(name = "stu_id", nullable = false)
     private Student student;
 
+
     @NotNull
     @Column(name = "start_date", nullable = false)
     private LocalDate startDate;
