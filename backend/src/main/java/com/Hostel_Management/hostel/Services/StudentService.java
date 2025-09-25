@@ -9,7 +9,10 @@ import com.Hostel_Management.hostel.models.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -101,9 +104,44 @@ public class StudentService {
         return studentRepo.save(student);
     }
 
-    // ✅ Get student profile
-    public Student getProfile(Long stuId) {
-        return studentRepo.findById(stuId)
-                .orElseThrow(() -> new RuntimeException("Student not found with id " + stuId));
-    }
+//    // ✅ Get student profile
+//    public Student getProfile(Long stuId) {
+//        return studentRepo.findById(stuId)
+//                .orElseThrow(() -> new RuntimeException("Student not found with id " + stuId));
+//    }
+//}
+public Map<String, Object> getProfile(Long stuId) {
+    Student student = studentRepo.findById(stuId)
+            .orElseThrow(() -> new RuntimeException("Student not found with id " + stuId));
+
+    Map<String, Object> profile = new HashMap<>();
+
+    // Student fields
+    profile.put("stuId", student.getStuId());
+    profile.put("Dept",student.getDept());
+    profile.put("Contact",student.getContact());
+    profile.put("Address",student.getAddress());
+    profile.put("Year",student.getYear());
+    profile.put("GuardianContact",student.getGuardianContact());
+
+
+
+    // profile.put("branch", student.getBranch());         // example field
+   // profile.put("year", student.getYear());             // example field
+   // profile.put("roomNumber", student.getRoomNumber()); // example field
+
+    // User fields
+    profile.put("name", student.getUser().getName());
+    profile.put("email", student.getUser().getEmail());
+    //profile.put("password", student.getUser().getPassword()); // hashed, be careful
+    //String decodedPassword = PasswordUtil.decrypt(student.getUser().getPassword());
+    //profile.put("password", decodedPassword);
+    // Add more fields if needed
+    // profile.put("fieldName", student.getField());
+
+    return profile;
+}
+
+
+
 }

@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/students")
@@ -55,9 +56,9 @@ public class StudentRoutes {
         return ResponseEntity.ok(studentService.updateProfile(stuId, updatedData));
     }
 
-    // ✅ Get profile
+    // ✅ Get student profile by ID
     @GetMapping("/{stuId}/profile")
-    public ResponseEntity<Student> getProfile(@PathVariable Long stuId) {
-        return ResponseEntity.ok(studentService.getProfile(stuId));
+    public Map<String, Object> getStudentProfile(@PathVariable Long stuId) {
+        return studentService.getProfile(stuId);
     }
 }
