@@ -19,3 +19,4 @@ public class LeaveDto {
     private String reason;
     private Leave.LeaveStatus status;
 }
+

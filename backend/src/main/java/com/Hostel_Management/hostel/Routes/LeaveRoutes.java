@@ -1,6 +1,8 @@
 package com.Hostel_Management.hostel.Routes;
 
 import com.Hostel_Management.hostel.Dto.LeaveDto;
+import com.Hostel_Management.hostel.Dto.LeaveStatusDto;
+import com.Hostel_Management.hostel.models.Leave;
 import com.Hostel_Management.hostel.Services.LeaveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,11 +35,11 @@ public class LeaveRoutes {
         return leaveService.getLeavesByStudent(studentId);
     }
 
-    // Update Leave
-    @PutMapping("/{id}")
-    public LeaveDto updateLeave(@PathVariable Long id, @RequestBody LeaveDto leaveDto) {
-        return leaveService.updateLeave(id, leaveDto);
+    @PutMapping("/{id}/status")
+    public LeaveDto updateLeaveStatus(@PathVariable Long id, @RequestBody LeaveStatusDto dto) {
+        return leaveService.updateLeaveStatus(id, dto.getStatus());
     }
+
 
     // Delete Leave
     @DeleteMapping("/{id}")

@@ -72,24 +72,33 @@ public class LeaveService {
                 .collect(Collectors.toList());
     }
 
-    // Update Leave
-    public LeaveDto updateLeave(Long leaveId, LeaveDto dto) {
-        Optional<Leave> leaveOpt = leaveRepository.findById(leaveId);
-        if (leaveOpt.isPresent()) {
-            Leave existing = leaveOpt.get();
-            existing.setStartDate(dto.getStartDate());
-            existing.setEndDate(dto.getEndDate());
-            existing.setReason(dto.getReason());
-            existing.setStatus(dto.getStatus());
-            Leave saved = leaveRepository.save(existing);
-            return convertToDTO(saved);
-        }
-        throw new RuntimeException("Leave not found");
+    // Update Leave Status
+    public LeaveDto updateLeaveStatus(Long leaveId, Leave.LeaveStatus status) {
+        Leave existing = leaveRepository.findById(leaveId)
+                .orElseThrow(() -> new RuntimeException("Leave with ID " + leaveId + " not found"));
+
+        // Update status
+        existing.setStatus(status);
+
+        // Save updated leave
+        Leave updated = leaveRepository.save(existing);
+
+        // Convert to DTO
+        return convertToDTO(updated);
     }
 
-    // Delete Leave
-    public void deleteLeave(Long leaveId) {
-        leaveRepository.deleteById(leaveId);
+
+
+
+    // Delete Leave by ID
+    public String deleteLeave(Long leaveId) {
+        Optional<Leave> leaveOpt = leaveRepository.findById(leaveId);
+        if (leaveOpt.isPresent()) {
+            leaveRepository.deleteById(leaveId);
+            return "Leave with ID " + leaveId + " deleted successfully";
+        } else {
+            throw new RuntimeException("Leave with ID " + leaveId + " not found");
+        }
     }
 
     // Auto-delete expired leaves
