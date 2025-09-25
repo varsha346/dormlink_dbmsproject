@@ -34,7 +34,7 @@ public class AuthRoute {
 
         // Set JWT as HttpOnly cookie
         Cookie cookie = new Cookie("token", token);
-        cookie.setHttpOnly(true);           // Prevent JS access
+        cookie.setHttpOnly(false);           // Prevent JS access
         cookie.setSecure(false);            // true in production (HTTPS)
         cookie.setPath("/");                // Cookie valid for entire site
         cookie.setMaxAge(24 * 60 * 60);     // 1 day
@@ -49,7 +49,7 @@ public class AuthRoute {
     public ResponseEntity<String> logout(HttpServletResponse response) {
         // Delete the cookie
         Cookie cookie = new Cookie("token", null);
-        cookie.setHttpOnly(false);
+        cookie.setHttpOnly(true);
         cookie.setSecure(false);            // true in production
         cookie.setPath("/");
         cookie.setMaxAge(0);                // Expire immediately
