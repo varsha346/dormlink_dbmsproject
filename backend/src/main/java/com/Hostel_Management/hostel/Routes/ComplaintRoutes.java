@@ -1,6 +1,9 @@
 package com.Hostel_Management.hostel.Routes;
 
-
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.ArrayList;
 import com.Hostel_Management.hostel.models.Complaint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,11 +24,15 @@ public class ComplaintRoutes {
         return complaintService.addComplaint(complaint);
     }
 
-    // Get all leaves
-    @GetMapping("/all")
-    public List<Complaint> getAllComplaints() {
-        return complaintService.getAllComplaints();
-    }
+//    // Get all leaves
+//    @GetMapping("/all")
+//    public List<Complaint> getAllComplaints() {
+//        return complaintService.getAllComplaints();
+//    }
+@GetMapping("/all")
+public List<Map<String, Object>> getAllComplaints() {
+    return complaintService.getAllComplaints(); // make sure this is the method name
+}
 
 
     // Get leaves by Student ID
