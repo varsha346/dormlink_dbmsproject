@@ -23,18 +23,17 @@ public class AuthService {
     private JwtUtil jwtUtil;
 
     public String login(String email, String password) {
-        // 1. Find user by email
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        // 2. Check password
         if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new RuntimeException("Invalid password");
         }
 
-        // 3. Return token or success message
-        return jwtUtil.generateToken(user.getEmail());
+        // ✅ Pass the whole user, not just email
+        return jwtUtil.generateToken(user);
     }
+
 
     public String register(User user) {
         // Check if email already exists

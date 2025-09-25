@@ -2,6 +2,7 @@ package com.Hostel_Management.hostel.Config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import com.Hostel_Management.hostel.models.User;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,9 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 import java.util.function.Function;
+
+import java.util.Map;
+import java.util.HashMap;
 
 @Component
 public class JwtUtil {
@@ -24,14 +28,20 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(secretKey.getBytes());
     }
 
-    public String generateToken(String email) {
+    public String generateToken(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", user.getUserId()); // add student/user ID
+        claims.put("email", user.getEmail());
+
         return Jwts.builder()
-                .setSubject(email)
+                .setClaims(claims)
+                .setSubject(user.getEmail())
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     public Boolean validateToken(String token, String email) {
         final String username = extractUsername(token);

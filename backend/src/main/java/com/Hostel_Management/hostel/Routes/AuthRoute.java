@@ -49,7 +49,7 @@ public class AuthRoute {
     public ResponseEntity<String> logout(HttpServletResponse response) {
         // Delete the cookie
         Cookie cookie = new Cookie("token", null);
-        cookie.setHttpOnly(true);
+        cookie.setHttpOnly(false);
         cookie.setSecure(false);            // true in production
         cookie.setPath("/");
         cookie.setMaxAge(0);                // Expire immediately
