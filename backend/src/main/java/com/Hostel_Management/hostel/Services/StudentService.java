@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import com.Hostel_Management.hostel.Dto.StudentDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,8 +82,9 @@ public class StudentService {
     }
 
     // ✅ Update student profile
+
     @Transactional
-    public Student updateProfile(Long stuId, Student updatedData) {
+    public Student updateProfile(Long stuId, StudentDto dto) {
         User user = userRepo.findById(stuId)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + stuId));
 
@@ -94,17 +96,24 @@ public class StudentService {
                     return s;
                 });
 
-        student.setContact(updatedData.getContact());
-        student.setGuardianContact(updatedData.getGuardianContact());
-        student.setDept(updatedData.getDept());
-        student.setAddress(updatedData.getAddress());
-        student.setYear(updatedData.getYear());
-        student.setFeeStatus(false); // default
+        // ✅ Update student fields
+        if (dto.getContact() != null) student.setContact(dto.getContact());
+        if (dto.getGuardianContact() != null) student.setGuardianContact(dto.getGuardianContact());
+        if (dto.getDept() != null) student.setDept(dto.getDept());
+        if (dto.getAddress() != null) student.setAddress(dto.getAddress());
+        if (dto.getYear() != null) student.setYear(dto.getYear());
+        student.setFeeStatus(false);
 
+        // ✅ Update user fields
+        if (dto.getName() != null) user.setName(dto.getName());
+        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
+
+        userRepo.save(user);
         return studentRepo.save(student);
     }
 
-//    // ✅ Get student profile
+
+    //    // ✅ Get student profile
 //    public Student getProfile(Long stuId) {
 //        return studentRepo.findById(stuId)
 //                .orElseThrow(() -> new RuntimeException("Student not found with id " + stuId));

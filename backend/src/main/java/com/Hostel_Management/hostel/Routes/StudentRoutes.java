@@ -1,5 +1,6 @@
 package com.Hostel_Management.hostel.Routes;
 
+import com.Hostel_Management.hostel.Dto.StudentDto;
 import com.Hostel_Management.hostel.Services.StudentService;
 import com.Hostel_Management.hostel.models.Student;
 import lombok.RequiredArgsConstructor;
@@ -49,12 +50,14 @@ public class StudentRoutes {
     }
 
     // ✅ Update profile
-    @PutMapping("/{stuId}/profile")
+    @PutMapping("/students/{stuId}/profile")
     public ResponseEntity<Student> updateProfile(
             @PathVariable Long stuId,
-            @RequestBody Student updatedData) {
-        return ResponseEntity.ok(studentService.updateProfile(stuId, updatedData));
+            @RequestBody StudentDto dto) {
+        Student updatedStudent = studentService.updateProfile(stuId, dto);
+        return ResponseEntity.ok(updatedStudent);
     }
+
 
     // ✅ Get student profile by ID
     @GetMapping("/{stuId}/profile")
