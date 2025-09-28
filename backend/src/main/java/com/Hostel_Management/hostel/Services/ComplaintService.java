@@ -45,7 +45,7 @@ public List<Map<String, Object>> getAllComplaints() {
         //map.put("title", comp.getTitle());
         map.put("description", comp.getDescription());
         map.put("status", comp.getStatus());
-        map.put("studentId", comp.getStudent().getStuId());
+        //map.put("studentId", comp.getStudent().getStuId());
         map.put("studentName", comp.getStudent().getUser().getName()); // add student name
         response.add(map);
     }

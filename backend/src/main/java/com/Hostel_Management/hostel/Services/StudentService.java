@@ -127,11 +127,11 @@ public Map<String, Object> getProfile(Long stuId) {
 
     // Student fields
     profile.put("stuId", student.getStuId());
-    profile.put("Dept",student.getDept());
-    profile.put("Contact",student.getContact());
-    profile.put("Address",student.getAddress());
-    profile.put("Year",student.getYear());
-    profile.put("GuardianContact",student.getGuardianContact());
+    profile.put("dept",student.getDept());
+    profile.put("contact",student.getContact());
+    profile.put("address",student.getAddress());
+    profile.put("year",student.getYear());
+    profile.put("guardianContact",student.getGuardianContact());
 
 
 
