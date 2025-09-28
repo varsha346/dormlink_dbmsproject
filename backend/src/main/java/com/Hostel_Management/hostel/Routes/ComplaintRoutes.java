@@ -8,6 +8,8 @@ import com.Hostel_Management.hostel.models.Complaint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.Hostel_Management.hostel.Services.ComplaintService;
+import org.springframework.http.ResponseEntity;
+
 
 import java.util.List;
 
@@ -19,11 +21,18 @@ public class ComplaintRoutes {
     private ComplaintService complaintService;
 
     // Create a new complaint
-    @PostMapping("/add")
-    public Complaint createLeave(@RequestBody Complaint complaint) {
-        return complaintService.addComplaint(complaint);
-    }
+//    @PostMapping("/add")
+//    public Complaint createComplaint(@RequestBody Complaint complaint) {
+//        return complaintService.addComplaint(complaint);
+//    }
+    @PostMapping("/{studentId}")
+    public ResponseEntity<Complaint> createComplaint(
+            @PathVariable Long studentId,
+            @RequestBody Complaint complaint) {
 
+        Complaint savedComplaint = complaintService.addComplaint(studentId, complaint);
+        return ResponseEntity.ok(savedComplaint);
+    }
 
     @GetMapping("/all")
     public List<Map<String, Object>> getAllComplaints() {
@@ -33,19 +42,19 @@ public class ComplaintRoutes {
 
     // Get complaints by Student ID
     @GetMapping("/{studentId}")
-    public List<Complaint> getLeavesByStudentId(@PathVariable Long studentId) {
+    public List<Complaint> getComplaintByStudentId(@PathVariable Long studentId) {
         return complaintService.getComplaintsByStudent(studentId);
     }
 
     // Update a complaint
     @PutMapping("/{id}")
-    public Complaint updateLeave(@PathVariable Long id,  @RequestParam String status) {
+    public Complaint updateComplaint(@PathVariable Long id,  @RequestParam String status) {
         return complaintService.updateComplaintStatus(id, status);
     }
 
     // Delete a complaint by ID
     @DeleteMapping("/{id}")
-    public void deleteLeave(@PathVariable Long id) {
+    public void deleteComplaint(@PathVariable Long id) {
         complaintService.deleteComplaint(id);
     }
 }

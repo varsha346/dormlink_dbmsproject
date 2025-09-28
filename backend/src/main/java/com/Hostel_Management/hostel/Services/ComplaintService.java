@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import com.Hostel_Management.hostel.Repository.StudentRepository;
+import com.Hostel_Management.hostel.models.Student;
 
 import com.Hostel_Management.hostel.models.Complaint;
 import com.Hostel_Management.hostel.models.Complaint.ComplaintStatus;
@@ -19,8 +21,22 @@ public class ComplaintService {
     @Autowired
     private ComplaintRepository complaintRepository;
 
+    @Autowired
+    private StudentRepository studentRepository;
+
     // Add complaint
-    public Complaint addComplaint(Complaint complaint) {
+//    public Complaint addComplaint(Complaint complaint) {
+//        return complaintRepository.save(complaint);
+//    }
+    public Complaint addComplaint(Long studentId, Complaint complaint) {
+        // Fetch existing student from DB
+        Student student = studentRepository.findById(studentId)
+                .orElseThrow(() -> new RuntimeException("Student not found"));
+
+        // Attach managed student entity to complaint
+        complaint.setStudent(student);
+
+        // Save complaint
         return complaintRepository.save(complaint);
     }
 
