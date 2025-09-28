@@ -17,5 +17,8 @@ public class AllocationService {
     public List<Allocation> getAllocationsByStudentId(Long stuId) {
         return allocationRepository.findByStudent_StuId(stuId);
     }
+    public List<Allocation> getAllAllocations() {
+        return allocationRepository.findAll();
+    }
 }
 

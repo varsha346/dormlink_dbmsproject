@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
+import com.Hostel_Management.hostel.Dto.StudentDto;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -81,8 +82,9 @@ public class StudentService {
     }
 
     // ✅ Update student profile
+
     @Transactional
-    public Student updateProfile(Long stuId, Student updatedData) {
+    public Student updateProfile(Long stuId, StudentDto dto) {
         User user = userRepo.findById(stuId)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + stuId));
 
@@ -94,53 +96,60 @@ public class StudentService {
                     return s;
                 });
 
-        student.setContact(updatedData.getContact());
-        student.setGuardianContact(updatedData.getGuardianContact());
-        student.setDept(updatedData.getDept());
-        student.setAddress(updatedData.getAddress());
-        student.setYear(updatedData.getYear());
-        student.setFeeStatus(false); // default
+        // ✅ Update student fields
+        if (dto.getContact() != null) student.setContact(dto.getContact());
+        if (dto.getGuardianContact() != null) student.setGuardianContact(dto.getGuardianContact());
+        if (dto.getDept() != null) student.setDept(dto.getDept());
+        if (dto.getAddress() != null) student.setAddress(dto.getAddress());
+        if (dto.getYear() != null) student.setYear(dto.getYear());
+        student.setFeeStatus(false);
 
+        // ✅ Update user fields
+        if (dto.getName() != null) user.setName(dto.getName());
+        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
+
+        userRepo.save(user);
         return studentRepo.save(student);
     }
 
-//    // ✅ Get student profile
+
+    //    // ✅ Get student profile
 //    public Student getProfile(Long stuId) {
 //        return studentRepo.findById(stuId)
 //                .orElseThrow(() -> new RuntimeException("Student not found with id " + stuId));
 //    }
 //}
-public Map<String, Object> getProfile(Long stuId) {
-    Student student = studentRepo.findById(stuId)
-            .orElseThrow(() -> new RuntimeException("Student not found with id " + stuId));
+    public Map<String, Object> getProfile(Long stuId) {
+        Student student = studentRepo.findById(stuId)
+                .orElseThrow(() -> new RuntimeException("Student not found with id " + stuId));
 
-    Map<String, Object> profile = new HashMap<>();
+        Map<String, Object> profile = new HashMap<>();
 
-    // Student fields
-    profile.put("stuId", student.getStuId());
-    profile.put("Dept",student.getDept());
-    profile.put("Contact",student.getContact());
-    profile.put("Address",student.getAddress());
-    profile.put("Year",student.getYear());
-    profile.put("GuardianContact",student.getGuardianContact());
+        // Student fields
+        profile.put("stuId", student.getStuId());
+        profile.put("dept",student.getDept());
+        profile.put("contact",student.getContact());
+        profile.put("address",student.getAddress());
+        profile.put("year",student.getYear());
+        profile.put("guardianContact",student.getGuardianContact());
 
 
 
-    // profile.put("branch", student.getBranch());         // example field
-   // profile.put("year", student.getYear());             // example field
-   // profile.put("roomNumber", student.getRoomNumber()); // example field
+        // profile.put("branch", student.getBranch());         // example field
+        // profile.put("year", student.getYear());             // example field
+        // profile.put("roomNumber", student.getRoomNumber()); // example field
 
-    // User fields
-    profile.put("name", student.getUser().getName());
-    profile.put("email", student.getUser().getEmail());
-    //profile.put("password", student.getUser().getPassword()); // hashed, be careful
-    //String decodedPassword = PasswordUtil.decrypt(student.getUser().getPassword());
-    //profile.put("password", decodedPassword);
-    // Add more fields if needed
-    // profile.put("fieldName", student.getField());
+        // User fields
+        profile.put("name", student.getUser().getName());
+        profile.put("email", student.getUser().getEmail());
+        //profile.put("password", student.getUser().getPassword()); // hashed, be careful
+        //String decodedPassword = PasswordUtil.decrypt(student.getUser().getPassword());
+        //profile.put("password", decodedPassword);
+        // Add more fields if needed
+        // profile.put("fieldName", student.getField());
 
-    return profile;
-}
+        return profile;
+    }
 
 
 
