@@ -2,6 +2,8 @@ package com.Hostel_Management.hostel.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import lombok.AllArgsConstructor;
@@ -51,6 +53,11 @@ public class Student {
     @NotNull
     @Column(nullable = false)
     private String year;
+
+    @NotNull
+    @Column(name = "contract_end_date")
+    private LocalDate contractEndDate;  // NEW FIELD  // e.g., "2025-2026"
+
 
     @Version
     private Long version;

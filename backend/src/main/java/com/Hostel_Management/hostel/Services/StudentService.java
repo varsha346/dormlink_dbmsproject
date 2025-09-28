@@ -36,81 +36,81 @@ public class StudentService {
     }
 
 
-    // ✅ Allocate room to student
-    @Transactional
-    public void allocateRoom(Long studentId, Long roomId) {
-        Student student = studentRepo.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-
-        if (student.getRoom() != null) {
-            throw new RuntimeException("Student already has a room allocated");
-        }
-
-        Room room = roomRepo.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
-
-        if (room.getCurrOccu() >= room.getRoomType().getSize()) {
-            throw new RuntimeException("Room is already full");
-        }
-
-        student.setRoom(room);
-        room.setCurrOccu(room.getCurrOccu() + 1);
-
-        studentRepo.save(student);
-        roomRepo.save(room);
-    }
-
-    // ✅ Deallocate room
-    @Transactional
-    public void deallocateRoom(Long studentId) {
-        Student student = studentRepo.findById(studentId)
-                .orElseThrow(() -> new RuntimeException("Student not found"));
-
-        Room room = student.getRoom();
-        if (room == null) {
-            throw new RuntimeException("Student has no allocated room");
-        }
-
-        if (room.getCurrOccu() > 0) {
-            room.setCurrOccu(room.getCurrOccu() - 1);
-        }
-
-        student.setRoom(null);
-
-        studentRepo.save(student);
-        roomRepo.save(room);
-    }
-
-    // ✅ Update student profile
-
-    @Transactional
-    public Student updateProfile(Long stuId, StudentDto dto) {
-        User user = userRepo.findById(stuId)
-                .orElseThrow(() -> new RuntimeException("User not found with id " + stuId));
-
-        Student student = studentRepo.findById(stuId)
-                .orElseGet(() -> {
-                    Student s = new Student();
-                    s.setStuId(user.getUserId());
-                    s.setUser(user);
-                    return s;
-                });
-
-        // ✅ Update student fields
-        if (dto.getContact() != null) student.setContact(dto.getContact());
-        if (dto.getGuardianContact() != null) student.setGuardianContact(dto.getGuardianContact());
-        if (dto.getDept() != null) student.setDept(dto.getDept());
-        if (dto.getAddress() != null) student.setAddress(dto.getAddress());
-        if (dto.getYear() != null) student.setYear(dto.getYear());
-        student.setFeeStatus(false);
-
-        // ✅ Update user fields
-        if (dto.getName() != null) user.setName(dto.getName());
-        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
-
-        userRepo.save(user);
-        return studentRepo.save(student);
-    }
+//    // ✅ Allocate room to student
+//    @Transactional
+//    public void allocateRoom(Long studentId, Long roomId) {
+//        Student student = studentRepo.findById(studentId)
+//                .orElseThrow(() -> new RuntimeException("Student not found"));
+//
+//        if (student.getRoom() != null) {
+//            throw new RuntimeException("Student already has a room allocated");
+//        }
+//
+//        Room room = roomRepo.findById(roomId)
+//                .orElseThrow(() -> new RuntimeException("Room not found"));
+//
+//        if (room.getCurrOccu() >= room.getRoomType().getSize()) {
+//            throw new RuntimeException("Room is already full");
+//        }
+//
+//        student.setRoom(room);
+//        room.setCurrOccu(room.getCurrOccu() + 1);
+//
+//        studentRepo.save(student);
+//        roomRepo.save(room);
+//    }
+//
+//    // ✅ Deallocate room
+//    @Transactional
+//    public void deallocateRoom(Long studentId) {
+//        Student student = studentRepo.findById(studentId)
+//                .orElseThrow(() -> new RuntimeException("Student not found"));
+//
+//        Room room = student.getRoom();
+//        if (room == null) {
+//            throw new RuntimeException("Student has no allocated room");
+//        }
+//
+//        if (room.getCurrOccu() > 0) {
+//            room.setCurrOccu(room.getCurrOccu() - 1);
+//        }
+//
+//        student.setRoom(null);
+//
+//        studentRepo.save(student);
+//        roomRepo.save(room);
+//    }
+//
+//    // ✅ Update student profile
+//
+//    @Transactional
+//    public Student updateProfile(Long stuId, StudentDto dto) {
+//        User user = userRepo.findById(stuId)
+//                .orElseThrow(() -> new RuntimeException("User not found with id " + stuId));
+//
+//        Student student = studentRepo.findById(stuId)
+//                .orElseGet(() -> {
+//                    Student s = new Student();
+//                    s.setStuId(user.getUserId());
+//                    s.setUser(user);
+//                    return s;
+//                });
+//
+//        // ✅ Update student fields
+//        if (dto.getContact() != null) student.setContact(dto.getContact());
+//        if (dto.getGuardianContact() != null) student.setGuardianContact(dto.getGuardianContact());
+//        if (dto.getDept() != null) student.setDept(dto.getDept());
+//        if (dto.getAddress() != null) student.setAddress(dto.getAddress());
+//        if (dto.getYear() != null) student.setYear(dto.getYear());
+//        student.setFeeStatus(false);
+//
+//        // ✅ Update user fields
+//        if (dto.getName() != null) user.setName(dto.getName());
+//        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
+//
+//        userRepo.save(user);
+//        return studentRepo.save(student);
+//    }
 
 
     //    // ✅ Get student profile
