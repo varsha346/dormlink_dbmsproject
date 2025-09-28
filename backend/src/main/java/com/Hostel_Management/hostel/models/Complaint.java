@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "complaint")
@@ -21,6 +21,7 @@ public class Complaint {
         Resolved,
         Rejected
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long compId;
@@ -42,8 +43,12 @@ public class Complaint {
     @Column(nullable = false)
     private String subject;
 
-    @NotNull
-    @Column(nullable = false)
-    private LocalDate date;
-}
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
+    // Automatically set createdAt when complaint is saved
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = LocalDateTime.now();
+    }
+}

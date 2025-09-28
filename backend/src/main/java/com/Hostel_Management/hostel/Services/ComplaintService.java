@@ -58,8 +58,9 @@ public List<Map<String, Object>> getAllComplaints() {
     for (Complaint comp : complaints) {
         Map<String, Object> map = new HashMap<>();
         map.put("compId", comp.getCompId());
-        //map.put("title", comp.getTitle());
+        map.put("subject", comp.getSubject());
         map.put("description", comp.getDescription());
+        map.put("createdAt",comp.getCreatedAt());
         map.put("status", comp.getStatus());
         map.put("studentId", comp.getStudent().getStuId());
         map.put("studentName", comp.getStudent().getUser().getName()); // add student name
