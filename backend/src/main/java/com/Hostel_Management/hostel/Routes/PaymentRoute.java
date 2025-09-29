@@ -30,12 +30,16 @@ public class PaymentRoute {
 
     @PostMapping("/create-order")
     public ResponseEntity<Map<String, Object>> createOrder(@RequestBody Map<String, Object> data) throws RazorpayException {
-        int amount = (int) data.get("amount"); // in paise (₹100 = 10000)
+        // Safe handling of amount
+        Integer amountInt = (Integer) data.get("amount");
+        if (amountInt == null) {
+            amountInt = 10000; // default ₹100 if amount not sent
+        }
 
         RazorpayClient client = new RazorpayClient(razorpayKeyId, razorpaySecret);
 
         JSONObject orderRequest = new JSONObject();
-        orderRequest.put("amount", amount);
+        orderRequest.put("amount", amountInt); // in paise
         orderRequest.put("currency", "INR");
         orderRequest.put("payment_capture", 1);
 
@@ -45,6 +49,7 @@ public class PaymentRoute {
         response.put("id", order.get("id"));
         response.put("currency", order.get("currency"));
         response.put("amount", order.get("amount"));
+        response.put("key", razorpayKeyId); // send key to frontend
 
         return ResponseEntity.ok(response);
     }

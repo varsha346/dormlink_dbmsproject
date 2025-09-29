@@ -5,9 +5,10 @@ import com.Hostel_Management.hostel.Repository.RoomRepository;
 import com.Hostel_Management.hostel.Repository.StudentRepository;
 import com.Hostel_Management.hostel.models.Room;
 import com.Hostel_Management.hostel.models.Student;
+import java.time.LocalDate;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +43,26 @@ public class RoomService {
                 })
                 .collect(Collectors.toList());
     }
+
+    // RoomService.java
+
+    public RoomResponseDTO getRoomById(Long roomNo, LocalDate validDate) {
+        // ❌ Do not reassign validDate
+        // ✅ Use a new variable
+        LocalDate dateToCheck = (validDate != null) ? validDate : LocalDate.now();
+
+        Room room = roomRepo.findById(roomNo)
+                .orElseThrow(() -> new RuntimeException("Room not found"));
+
+        List<Student> validStudents = studentRepo.findByRoom(room).stream()
+                .filter(student -> student.getContractEndDate() != null &&
+                        !student.getContractEndDate().isBefore(dateToCheck))  // use dateToCheck
+                .collect(Collectors.toList());
+
+        return new RoomResponseDTO(room, validStudents);
+    }
+
+
 
     // ✅ Create room
     public Room createRoom(Room room) {

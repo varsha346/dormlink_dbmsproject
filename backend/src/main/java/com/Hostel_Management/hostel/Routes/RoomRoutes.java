@@ -131,6 +131,17 @@ public class RoomRoutes {
         return roomService.getRooms(validDate, showAll);
     }
 
+    // RoomRoutes.java
+
+    @GetMapping("/{roomNo}")
+    public RoomResponseDTO getRoomById(
+            @PathVariable Long roomNo,
+            @RequestParam(required = false) LocalDate validDate
+    ) {
+        return roomService.getRoomById(roomNo, validDate);
+    }
+
+
     // ===============================
 //    // 4️⃣ Optional: Get a single room by roomNo (with reviews + allocated students)
 //    // GET /rooms/{roomNo}?validDate=2025-09-28

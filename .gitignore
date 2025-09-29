@@ -45,6 +45,9 @@ buildNumber.properties
 /nbdist/
 /.nb-gradle/
 
+# Ignore Spring Boot configuration files
+src/main/resources/application.properties
+
 # ===================
 # Node.js / React Frontend (to be added later)
 # ===================
