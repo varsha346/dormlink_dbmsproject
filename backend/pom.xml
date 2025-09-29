@@ -91,10 +91,16 @@
 			<version>0.11.5</version>
 			<scope>runtime</scope>
 		</dependency>
+        <!-- Razorpay Java SDK -->
+        <dependency>
+            <groupId>com.razorpay</groupId>
+            <artifactId>razorpay-java</artifactId>
+            <version>1.3.8</version>
+        </dependency>
 
 
 
-	</dependencies>
+    </dependencies>
 
 	<build>
 		<plugins>
