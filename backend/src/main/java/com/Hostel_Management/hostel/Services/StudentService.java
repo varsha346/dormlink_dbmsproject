@@ -83,34 +83,34 @@ public class StudentService {
 //
 //    // ✅ Update student profile
 //
-//    @Transactional
-//    public Student updateProfile(Long stuId, StudentDto dto) {
-//        User user = userRepo.findById(stuId)
-//                .orElseThrow(() -> new RuntimeException("User not found with id " + stuId));
-//
-//        Student student = studentRepo.findById(stuId)
-//                .orElseGet(() -> {
-//                    Student s = new Student();
-//                    s.setStuId(user.getUserId());
-//                    s.setUser(user);
-//                    return s;
-//                });
-//
-//        // ✅ Update student fields
-//        if (dto.getContact() != null) student.setContact(dto.getContact());
-//        if (dto.getGuardianContact() != null) student.setGuardianContact(dto.getGuardianContact());
-//        if (dto.getDept() != null) student.setDept(dto.getDept());
-//        if (dto.getAddress() != null) student.setAddress(dto.getAddress());
-//        if (dto.getYear() != null) student.setYear(dto.getYear());
-//        student.setFeeStatus(false);
-//
-//        // ✅ Update user fields
-//        if (dto.getName() != null) user.setName(dto.getName());
-//        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
-//
-//        userRepo.save(user);
-//        return studentRepo.save(student);
-//    }
+    @Transactional
+    public Student updateProfile(Long stuId, StudentDto dto) {
+        User user = userRepo.findById(stuId)
+                .orElseThrow(() -> new RuntimeException("User not found with id " + stuId));
+
+        Student student = studentRepo.findById(stuId)
+                .orElseGet(() -> {
+                    Student s = new Student();
+                    s.setStuId(user.getUserId());
+                    s.setUser(user);
+                    return s;
+                });
+
+        // ✅ Update student fields
+        if (dto.getContact() != null) student.setContact(dto.getContact());
+        if (dto.getGuardianContact() != null) student.setGuardianContact(dto.getGuardianContact());
+        if (dto.getDept() != null) student.setDept(dto.getDept());
+        if (dto.getAddress() != null) student.setAddress(dto.getAddress());
+        if (dto.getYear() != null) student.setYear(dto.getYear());
+        student.setFeeStatus(false);
+
+        // ✅ Update user fields
+        if (dto.getName() != null) user.setName(dto.getName());
+        if (dto.getEmail() != null) user.setEmail(dto.getEmail());
+
+        userRepo.save(user);
+        return studentRepo.save(student);
+    }
 
 
     //    // ✅ Get student profile

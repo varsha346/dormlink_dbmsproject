@@ -54,8 +54,7 @@ public class Student {
     @Column(nullable = false)
     private String year;
 
-    @NotNull
-    @Column(name = "contract_end_date")
+    @Column(name = "contract_end_date" ,nullable = true)
     private LocalDate contractEndDate;  // NEW FIELD  // e.g., "2025-2026"
 
 

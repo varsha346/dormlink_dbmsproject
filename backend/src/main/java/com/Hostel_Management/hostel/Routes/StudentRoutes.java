@@ -33,21 +33,21 @@ public class StudentRoutes {
 
 
 
-    // ✅ Allocate room
-    @PostMapping("/{studentId}/allocate/{roomId}")
-    public ResponseEntity<String> allocateRoom(
-            @PathVariable Long studentId,
-            @PathVariable Long roomId) {
-        studentService.allocateRoom(studentId, roomId);
-        return ResponseEntity.ok("Room allocated successfully");
-    }
-
-    // ✅ Deallocate room
-    @PostMapping("/{studentId}/deallocate")
-    public ResponseEntity<String> deallocateRoom(@PathVariable Long studentId) {
-        studentService.deallocateRoom(studentId);
-        return ResponseEntity.ok("Room deallocated successfully");
-    }
+//    // ✅ Allocate room
+//    @PostMapping("/{studentId}/allocate/{roomId}")
+//    public ResponseEntity<String> allocateRoom(
+//            @PathVariable Long studentId,
+//            @PathVariable Long roomId) {
+//        studentService.allocateRoom(studentId, roomId);
+//        return ResponseEntity.ok("Room allocated successfully");
+//    }
+//
+//    // ✅ Deallocate room
+//    @PostMapping("/{studentId}/deallocate")
+//    public ResponseEntity<String> deallocateRoom(@PathVariable Long studentId) {
+//        studentService.deallocateRoom(studentId);
+//        return ResponseEntity.ok("Room deallocated successfully");
+//    }
 
     // ✅ Update profile
     @PutMapping("/{stuId}/profile")
