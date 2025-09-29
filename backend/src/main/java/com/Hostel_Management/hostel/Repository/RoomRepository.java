@@ -7,11 +7,6 @@ import java.util.List;
 
 public interface RoomRepository extends JpaRepository<Room, Long> {
 
-    // Get all rooms by RoomType
-    List<Room> findByRoomType(RoomReview roomType);
-
-    // Example: Get room by student id (assuming Allocation entity links Student and Room)
-
 
 
 }
