@@ -25,7 +25,7 @@ public class RoomService {
 
     // ✅ Unified method for available/all rooms
     public List<RoomResponseDTO> getRooms(final LocalDate validDate, boolean showAll) {
-       // if (validDate == null) validDate = LocalDate.now();
+        LocalDate dateToCheck = (validDate != null) ? validDate : LocalDate.now();
 
         List<Room> rooms = roomRepo.findAll();
 
@@ -33,16 +33,17 @@ public class RoomService {
                 // If showAll = false (student view), filter only rooms with currOccu < size
                 .filter(room -> showAll || room.getCurrOccu() < room.getSize())
                 .map(room -> {
-                    // Get students whose contractEndDate >= validDate
+                    // Get students whose contractEndDate >= dateToCheck
                     List<Student> validStudents = studentRepo.findByRoom(room).stream()
                             .filter(student -> student.getContractEndDate() != null &&
-                                    !student.getContractEndDate().isBefore(validDate))
+                                    !student.getContractEndDate().isBefore(dateToCheck))
                             .collect(Collectors.toList());
 
                     return new RoomResponseDTO(room, validStudents);
                 })
                 .collect(Collectors.toList());
     }
+
 
     // RoomService.java
 

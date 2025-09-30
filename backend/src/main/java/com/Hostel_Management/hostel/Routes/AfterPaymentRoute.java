@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.Map;
 
@@ -34,44 +34,46 @@ public class AfterPaymentRoute {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Transactional
     @PostMapping("/success")
     public ResponseEntity<?> handlePaymentSuccess(@RequestBody Map<String, Object> data) {
         try {
-            String razorpayOrderId = (String) data.get("razorpay_order_id");
-            String razorpayPaymentId = (String) data.get("razorpay_payment_id");
             Long studentId = Long.valueOf(data.get("studentId").toString());
             Long roomNo = Long.valueOf(data.get("roomNo").toString());
-            int amount = (int) data.get("amount"); // amount in paise
 
-            // 1. Validate student and room
             Student student = studentRepository.findById(studentId)
                     .orElseThrow(() -> new RuntimeException("Student not found"));
 
             Room room = roomRepository.findById(roomNo)
                     .orElseThrow(() -> new RuntimeException("Room not found"));
 
-            // 2. Update student info
+            if (room.getCurrOccu() >= room.getSize()) {
+                return ResponseEntity.badRequest().body(Map.of("error", "Room is full"));
+            }
+
+            // Assign student and increment occupancy atomically
+            student.setRoom(room);
             student.setFeeStatus(true);
             student.setContractEndDate(LocalDate.now().plusYears(1));
             studentRepository.save(student);
 
-            // 3. Update room occupancy
             room.setCurrOccu(room.getCurrOccu() + 1);
             roomRepository.save(room);
 
-            // 4. Save payment record
+            // Save payment record
             Payment payment = new Payment();
-            payment.setOrderId(razorpayOrderId);
-            payment.setPaymentId(razorpayPaymentId);
-            payment.setAmountPaid(amount);
+            payment.setOrderId((String) data.get("razorpay_order_id"));
+            payment.setPaymentId((String) data.get("razorpay_payment_id"));
+            payment.setAmountPaid((int) data.get("amount"));
             payment.setStudent(student);
             payment.setDate(LocalDate.now());
-
             paymentRepository.save(payment);
 
-            return ResponseEntity.ok(Map.of("message", "Payment processed and student updated."));
+            return ResponseEntity.ok(Map.of("message", "Payment processed and student assigned."));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
         }
     }
+
+
 }
