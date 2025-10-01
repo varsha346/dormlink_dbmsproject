@@ -45,9 +45,6 @@ buildNumber.properties
 /nbdist/
 /.nb-gradle/
 
-# Ignore Spring Boot configuration files
-# Ignore Spring Boot configuration
-backend/src/main/resources/application.properties
 
 
 # ===================

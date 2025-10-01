@@ -1,36 +1,32 @@
 package com.Hostel_Management.hostel.Routes;
 
+import com.Hostel_Management.hostel.Services.AllocationService;
 import com.Hostel_Management.hostel.models.Allocation;
 import com.Hostel_Management.hostel.models.Student;
-import com.Hostel_Management.hostel.Services.AllocationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/allocation")
+@RequestMapping("/api/allocations")
 @RequiredArgsConstructor
 public class AllocationRoute {
 
     private final AllocationService allocationService;
 
-    // Get allocation history for a specific student
-    @GetMapping("/{stuId}")
-    public ResponseEntity<List<Allocation>> getAllocationsByStudentId(@PathVariable Long stuId) {
-        return ResponseEntity.ok(allocationService.getAllocationsByStudentId(stuId));
-    }
-
-    // Get full allocation history (all students)
-    @GetMapping("/all")
-    public ResponseEntity<List<Allocation>> getAllAllocations() {
-        return ResponseEntity.ok(allocationService.getAllAllocations());
-    }
-
-    // Get currently allocated students
+    // ✅ 1. Current Allocations
     @GetMapping("/current")
-    public ResponseEntity<List<Student>> getCurrentAllocations() {
-        return ResponseEntity.ok(allocationService.getCurrentAllocations());
+    public List<Student> getCurrentAllocations() {
+        return allocationService.getCurrentAllocations();
+    }
+
+    // ✅ 2. Allocation History (with filters)
+    @GetMapping("/history")
+    public List<Allocation> filterAllocationHistory(
+            @RequestParam(required = false) Integer year,
+            @RequestParam(required = false) String roomNo,
+            @RequestParam(required = false) String studentName) {
+        return allocationService.filterAllocationHistory(year, roomNo, studentName);
     }
 }
