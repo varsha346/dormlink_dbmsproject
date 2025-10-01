@@ -6,6 +6,7 @@ import com.Hostel_Management.hostel.models.Allocation;
 import com.Hostel_Management.hostel.models.Student;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import com.Hostel_Management.hostel.Dto.AllocationDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,11 +22,11 @@ public class AllocationService {
     public List<Student> getCurrentAllocations() {
         return studentRepository.findByContractEndDateAfter(LocalDate.now());
     }
-    public List<Student> filterCurrentAllocations(Integer year, String roomNo, String studentName) {
+    public List<AllocationDTO> getCurrentAllocations(String year, String roomNo, String studentName) {
         return studentRepository.filterCurrentAllocations(LocalDate.now(), year, roomNo, studentName);
     }
-    // ✅ Past allocations = allocation history (with filters)
-    public List<Allocation> filterAllocationHistory(Integer year, String roomNo, String studentName) {
+
+    public List<AllocationDTO> getAllocationHistory(Integer year, String roomNo, String studentName) {
         return allocationRepository.filterAllocations(year, roomNo, studentName);
     }
 }
