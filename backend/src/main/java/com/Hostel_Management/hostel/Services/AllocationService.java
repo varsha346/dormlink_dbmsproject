@@ -1,24 +1,29 @@
 package com.Hostel_Management.hostel.Services;
 
-import com.Hostel_Management.hostel.models.Allocation;
 import com.Hostel_Management.hostel.Repository.AllocationRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.Hostel_Management.hostel.Repository.StudentRepository;
+import com.Hostel_Management.hostel.models.Allocation;
+import com.Hostel_Management.hostel.models.Student;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AllocationService {
 
-    @Autowired
-    private AllocationRepository allocationRepository;
+    private final AllocationRepository allocationRepository;
+    private final StudentRepository studentRepository;
 
-    // Get allocation history by student ID
-    public List<Allocation> getAllocationsByStudentId(Long stuId) {
-        return allocationRepository.findByStudent_StuId(stuId);
+    // ✅ Current allocations = students still in hostel
+    public List<Student> getCurrentAllocations() {
+        return studentRepository.findByContractEndDateAfter(LocalDate.now());
     }
-    public List<Allocation> getAllAllocations() {
-        return allocationRepository.findAll();
+
+    // ✅ Past allocations = allocation history (with filters)
+    public List<Allocation> filterAllocationHistory(Integer year, String roomNo, String studentName) {
+        return allocationRepository.filterAllocations(year, roomNo, studentName);
     }
 }
-
