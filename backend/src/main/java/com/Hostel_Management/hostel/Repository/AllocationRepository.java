@@ -17,7 +17,7 @@ public interface AllocationRepository extends JpaRepository<Allocation, Long> {
     @Query("SELECT a FROM Allocation a " +
             "WHERE (:year IS NULL OR YEAR(a.startDate) = :year) " +
             "AND (:roomNo IS NULL OR a.room.roomNo = :roomNo) " +
-            "AND (:studentName IS NULL OR LOWER(a.student.name) LIKE LOWER(CONCAT('%', :studentName, '%')))")
+            "AND (:studentName IS NULL OR LOWER(a.student.user.name) LIKE LOWER(CONCAT('%', :studentName, '%')))")
     List<Allocation> filterAllocations(@Param("year") Integer year,
                                        @Param("roomNo") String roomNo,
                                        @Param("studentName") String studentName);

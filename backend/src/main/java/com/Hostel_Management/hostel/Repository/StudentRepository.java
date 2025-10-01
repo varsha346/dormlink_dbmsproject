@@ -20,7 +20,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             "WHERE s.contractEndDate >= :today " +
             "AND (:year IS NULL OR YEAR(s.contractStartDate) = :year) " +
             "AND (:roomNo IS NULL OR s.room.roomNo = :roomNo) " +
-            "AND (:studentName IS NULL OR LOWER(s.name) LIKE LOWER(CONCAT('%', :studentName, '%')))")
+            "AND (:studentName IS NULL OR LOWER(s.user.name) LIKE LOWER(CONCAT('%', :studentName, '%')))")
     List<Student> filterCurrentAllocations(@Param("today") LocalDate today,
                                            @Param("year") Integer year,
                                            @Param("roomNo") String roomNo,
