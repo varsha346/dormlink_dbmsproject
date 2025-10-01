@@ -15,18 +15,18 @@ import org.springframework.data.repository.query.Param;
 public interface StudentRepository extends JpaRepository<Student, Long> {
   //  List<Student> findByContractEndDateBefore(Date date);
   List<Student> findByContractEndDateBefore(LocalDate date );
-  List<Student> findByRoom(Room room);
-  List<Student> findByContractEndDateAfter(LocalDate date);
-  // ✅ Current allocations filter
-  @Query("SELECT new com.Hostel_Management.hostel.dto.AllocationDTO(" +
-          "s.stuId, s.user.name, s.year, s.contractEndDate, s.room.roomNo, NULL, NULL) " +
-          "FROM Student s " +
-          "WHERE s.contractEndDate >= :today " +
-          "AND (:year IS NULL OR s.year = :year) " +
-          "AND (:roomNo IS NULL OR s.room.roomNo = :roomNo) " +
-          "AND (:studentName IS NULL OR LOWER(s.user.name) LIKE LOWER(CONCAT('%', :studentName, '%')))")
-  List<AllocationDTO> filterCurrentAllocations(@Param("today") java.time.LocalDate today,
-                                               @Param("year") String year,
-                                               @Param("roomNo") String roomNo,
-                                               @Param("studentName") String studentName);
+    List<Student> findByRoom(Room room);
+    List<Student> findByContractEndDateAfter(LocalDate date);
+    // ✅ Current allocations filter
+    @Query("SELECT new com.Hostel_Management.hostel.dto.AllocationDTO(" +
+            "s.stuId, s.user.name, s.year, s.contractEndDate, s.room.roomNo, NULL, NULL) " +
+            "FROM Student s " +
+            "WHERE s.contractEndDate >= :today " +
+            "AND (:year IS NULL OR s.year = :year) " +
+            "AND (:roomNo IS NULL OR s.room.roomNo = :roomNo) " +
+            "AND (:studentName IS NULL OR LOWER(s.user.name) LIKE LOWER(CONCAT('%', :studentName, '%')))")
+    List<AllocationDTO> filterCurrentAllocations(@Param("today") java.time.LocalDate today,
+                                                 @Param("year") String year,
+                                                 @Param("roomNo") String roomNo,
+                                                 @Param("studentName") String studentName);
 }
