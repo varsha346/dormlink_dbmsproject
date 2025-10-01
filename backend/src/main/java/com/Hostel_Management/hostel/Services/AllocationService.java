@@ -21,7 +21,9 @@ public class AllocationService {
     public List<Student> getCurrentAllocations() {
         return studentRepository.findByContractEndDateAfter(LocalDate.now());
     }
-
+    public List<Student> filterCurrentAllocations(Integer year, String roomNo, String studentName) {
+        return studentRepository.filterCurrentAllocations(LocalDate.now(), year, roomNo, studentName);
+    }
     // ✅ Past allocations = allocation history (with filters)
     public List<Allocation> filterAllocationHistory(Integer year, String roomNo, String studentName) {
         return allocationRepository.filterAllocations(year, roomNo, studentName);
