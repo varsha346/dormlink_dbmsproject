@@ -17,10 +17,20 @@ public class AllocationService {
     private final AllocationRepository allocationRepository;
     private final StudentRepository studentRepository;
 
-    // ✅ 1. Current allocations (all students still in hostel) without filters
+    // ✅ 1. Current allocations (students still in hostel)
     public List<Student> getCurrentAllocations() {
-        return studentRepository.findByContractEndDateAfter(LocalDate.now());
+        LocalDate today = LocalDate.now();
+
+        // fetch all students from DB
+        List<Student> allStudents = studentRepository.findAll();
+
+        // filter only those whose contractEndDate is after today
+        return allStudents.stream()
+                .filter(student -> student.getContractEndDate() != null &&
+                        student.getContractEndDate().isAfter(today))
+                .toList();
     }
+
 
     // ✅ 2. Current allocations with optional filters
     public List<Student> getFilteredStudents(LocalDate today, String year, String roomNo, String studentName) {

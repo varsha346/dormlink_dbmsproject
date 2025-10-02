@@ -12,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
   //  List<Student> findByContractEndDateBefore(Date date);
-  List<Student> findByContractEndDateBefore(LocalDate date );
+  //List<Student> findByContractEndDate(LocalDate date );
     List<Student> findByRoom(Room room);
     List<Student> findByContractEndDateAfter(LocalDate date);
     @Query("SELECT s FROM Student s " +
