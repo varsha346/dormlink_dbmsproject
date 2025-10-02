@@ -17,6 +17,11 @@ public class AllocationRoute {
 
     private final AllocationService allocationService;
 
+    @GetMapping("/current")
+    public List<Student> getCurrentAllocations() {
+        return  allocationService.getCurrentAllocations();
+
+    }
     // ✅ 1. Filtered Current Allocations
     @GetMapping("/current")
     public List<Student> getCurrentAllocations(
