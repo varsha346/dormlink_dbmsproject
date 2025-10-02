@@ -2,11 +2,10 @@ package com.Hostel_Management.hostel.Services;
 
 import com.Hostel_Management.hostel.Repository.AllocationRepository;
 import com.Hostel_Management.hostel.Repository.StudentRepository;
-import com.Hostel_Management.hostel.models.Allocation;
 import com.Hostel_Management.hostel.models.Student;
+import com.Hostel_Management.hostel.models.Allocation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.Hostel_Management.hostel.Dto.AllocationDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,15 +17,20 @@ public class AllocationService {
     private final AllocationRepository allocationRepository;
     private final StudentRepository studentRepository;
 
-    // ✅ Current allocations = students still in hostel
+    // ✅ 1. Current allocations (all students still in hostel) without filters
     public List<Student> getCurrentAllocations() {
         return studentRepository.findByContractEndDateAfter(LocalDate.now());
     }
-    public List<AllocationDTO> getCurrentAllocations(String year, String roomNo, String studentName) {
-        return studentRepository.filterCurrentAllocations(LocalDate.now(), year, roomNo, studentName);
+
+    // ✅ 2. Current allocations with optional filters
+    public List<Student> getFilteredStudents(LocalDate today, String year, String roomNo, String studentName) {
+        // If today is null, use current date
+        LocalDate filterDate = (today != null) ? today : LocalDate.now();
+        return studentRepository.filterCurrentAllocations(filterDate, year, roomNo, studentName);
     }
 
-    public List<AllocationDTO> getAllocationHistory(Integer year, String roomNo, String studentName) {
+    // ✅ 3. Allocation history with optional filters
+    public List<Allocation> getFilteredAllocations(Integer year, String roomNo, String studentName) {
         return allocationRepository.filterAllocations(year, roomNo, studentName);
     }
 }
