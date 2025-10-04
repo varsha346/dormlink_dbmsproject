@@ -5,16 +5,20 @@ import com.Hostel_Management.hostel.Repository.LeaveRepository;
 import com.Hostel_Management.hostel.Repository.StudentRepository;
 import com.Hostel_Management.hostel.models.Leave;
 import com.Hostel_Management.hostel.models.Student;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-
+import org.modelmapper.ModelMapper;
+import com.Hostel_Management.hostel.Config.MapperConfig;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class LeaveService {
 
     @Autowired
@@ -22,6 +26,7 @@ public class LeaveService {
 
     @Autowired
     private StudentRepository studentRepository;
+    private final ModelMapper modelMapper;
 
     // Convert Entity -> DTO
     public LeaveDto convertToDTO(Leave leave) {
