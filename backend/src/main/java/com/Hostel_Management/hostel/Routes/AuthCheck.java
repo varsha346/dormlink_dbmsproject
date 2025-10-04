@@ -27,9 +27,11 @@ public class AuthCheck {
                 }
             }
         }
-        if (jwt == null || !jwtUtil.validateToken(jwt, jwtUtil.extractUsername(jwt))) {
+        String username = jwtUtil.extractUsername(jwt);
+        if (jwt == null || username == null || !jwtUtil.validateToken(jwt, username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
         }
+
         return ResponseEntity.ok("Valid");
     }
 }
