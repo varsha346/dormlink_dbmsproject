@@ -56,9 +56,11 @@ public class LeaveService {
 
     // Add Leave
     public LeaveDto addLeave(LeaveDto dto) {
-        Leave leave = convertToEntity(dto);
+       // Leave leave = convertToEntity(dto);
+        Leave leave = modelMapper.map(dto,Leave.class);
         Leave saved = leaveRepository.save(leave);
-        return convertToDTO(saved);
+
+        return dto;
     }
 
     // Get All Leaves
