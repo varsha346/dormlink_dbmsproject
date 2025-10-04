@@ -6,9 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import com.Hostel_Management.hostel.models.RoomReview;
 
 
 @Entity
@@ -57,5 +57,26 @@ public class Room {
     private String description;
 
 
+    @Entity
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Payment {
 
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+
+        private String orderId;
+
+        private String paymentId;
+
+        private int amountPaid;
+
+        private LocalDate date;
+
+        @ManyToOne
+        @JoinColumn(name = "student_id")
+        private Student student;
+    }
 }
