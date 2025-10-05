@@ -14,7 +14,16 @@ import java.util.Collections;
 
 @Entity
 @Data
-@Table(name = "user")
+@Table(name = "user"
+//        uniqueConstraints = {
+//        @UniqueConstraint(name = "unique_user_email",columnNames = {"email"}),
+//        @UniqueConstraint(name = "unique_user_password",columnNames = {"password"})
+//        }
+//      indexes = {
+//        @Index(name = "idx_user_name",columnList = "name")
+//        }
+
+)
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {

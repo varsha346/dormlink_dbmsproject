@@ -4,11 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 @Entity
 @Data
@@ -57,6 +59,9 @@ public class Student {
     @Column(name = "contract_end_date" ,nullable = true)
     private LocalDate contractEndDate;  // NEW FIELD  // e.g., "2025-2026"
 
+//    @CreationTimestamp
+//    @Column(updatable = false )
+//    private LocalDateTime createdAt;
 
     @Version
     private Long version;

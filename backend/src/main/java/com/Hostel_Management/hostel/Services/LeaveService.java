@@ -60,7 +60,7 @@ public class LeaveService {
         Leave leave = modelMapper.map(dto,Leave.class);
         Leave saved = leaveRepository.save(leave);
 
-        return dto;
+        return dto ;
     }
 
     // Get All Leaves
