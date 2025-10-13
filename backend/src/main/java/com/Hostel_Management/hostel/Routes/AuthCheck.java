@@ -31,6 +31,10 @@ public class AuthCheck {
         if (jwt == null || username == null || !jwtUtil.validateToken(jwt, username)) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Token expired");
         }
+        else if(jwtUtil.validateToken(jwt, username)){
+            return ResponseEntity.status(HttpStatus.OK).body("valid session");
+
+        }
 
         return ResponseEntity.ok("Valid");
     }

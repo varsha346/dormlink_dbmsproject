@@ -20,43 +20,52 @@ public class AuthRoute {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody User user) {
         String message = authService.register(user);
-        return ResponseEntity.ok()
-                .header("Content-Type", "application/json")
-                .body("{\"message\": \"" + message + "\"}");
+        return ResponseEntity.ok("{\"message\": \"" + message + "\"}");
     }
 
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody Map<String, String> loginRequest,
                                         HttpServletResponse response) {
-
-        // Call existing AuthService login method
         String token = authService.login(loginRequest.get("email"), loginRequest.get("password"));
 
-        // Set JWT as HttpOnly cookie
         Cookie cookie = new Cookie("token", token);
-        cookie.setHttpOnly(false);           // Prevent JS access
-        cookie.setSecure(false);            // true in production (HTTPS)
-        cookie.setPath("/");                // Cookie valid for entire site
-        cookie.setMaxAge(24 * 60 * 60);     // 1 day
+        cookie.setHttpOnly(false);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(24 * 60 * 60);
         response.addCookie(cookie);
 
-        return ResponseEntity.ok()
-                .header("Content-Type", "application/json")
-                .body("{\"message\": \"Login successful\"}");
+        return ResponseEntity.ok("{\"message\": \"Login successful\"}");
     }
 
     @PostMapping("/logout")
     public ResponseEntity<String> logout(HttpServletResponse response) {
-        // Delete the cookie
         Cookie cookie = new Cookie("token", null);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false);            // true in production
+        cookie.setSecure(false);
         cookie.setPath("/");
-        cookie.setMaxAge(0);                // Expire immediately
+        cookie.setMaxAge(0);
         response.addCookie(cookie);
 
-        return ResponseEntity.ok()
-                .header("Content-Type", "application/json")
-                .body("{\"message\": \"Logged out successfully\"}");
+        return ResponseEntity.ok("{\"message\": \"Logged out successfully\"}");
+    }
+
+    // ---------------- FORGOT PASSWORD ----------------
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> request) {
+        String email = request.get("email");
+        String message = authService.generateResetToken(email);
+        return ResponseEntity.ok("{\"message\": \"" + message + "\"}");
+    }
+
+
+    // ---------------- RESET PASSWORD ----------------
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(@RequestBody Map<String, String> request) {
+        String token = request.get("token");
+        String newPassword = request.get("newPassword");
+
+        String message = authService.resetPassword(token, newPassword);
+        return ResponseEntity.ok("{\"message\": \"" + message + "\"}");
     }
 }
