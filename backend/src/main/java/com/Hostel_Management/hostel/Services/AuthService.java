@@ -56,6 +56,14 @@ public class AuthService {
         return "User registered successfully";
     }
 
+    public String generateTokenForOAuthUser(String email, String name) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", email);
+        claims.put("name", name);
+
+        return jwtUtil.generateTokenWithClaims(email, claims);
+    }
+
     // ---------------- FORGOT PASSWORD ----------------
     public String generateResetToken(String email) {
         User user = userRepository.findByEmail(email)
