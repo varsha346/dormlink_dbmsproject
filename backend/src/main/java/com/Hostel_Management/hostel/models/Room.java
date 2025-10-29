@@ -57,26 +57,5 @@ public class Room {
     private String description;
 
 
-    @Entity
-    @Data
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Payment {
-
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
-
-        private String orderId;
-
-        private String paymentId;
-
-        private int amountPaid;
-
-        private LocalDate date;
-
-        @ManyToOne
-        @JoinColumn(name = "student_id")
-        private Student student;
-    }
+    
 }
