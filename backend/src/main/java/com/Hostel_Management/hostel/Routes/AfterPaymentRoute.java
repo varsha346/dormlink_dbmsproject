@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.Hostel_Management.hostel.models.Student;
 import com.Hostel_Management.hostel.models.Room;
+import com.Hostel_Management.hostel.models.Payment;
 import com.Hostel_Management.hostel.Repository.StudentRepository;
 import com.Hostel_Management.hostel.Repository.RoomRepository;
 import com.Hostel_Management.hostel.Repository.PaymentRepository;
@@ -60,7 +61,7 @@ public class AfterPaymentRoute {
             roomRepository.save(room);
 
             // Save payment record
-            Room.Payment payment = new Room.Payment();
+            Payment payment = new Payment();
             payment.setOrderId((String) data.get("razorpay_order_id"));
             payment.setPaymentId((String) data.get("razorpay_payment_id"));
             payment.setAmountPaid((int) data.get("amount"));
