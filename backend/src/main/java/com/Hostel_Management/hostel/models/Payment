@@ -1,0 +1,42 @@
+package com.Hostel_Management.hostel.models;
+import jakarta.persistence.*;
+import lombok.*;
+import java.time.LocalDate;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Table(name = "payments")
+
+public class Payment {
+
+
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // Razorpay / Online payment order ID
+    @Column(name = "order_id", unique = true)
+    private String orderId;
+
+    // Transaction/payment ID received from gateway
+    @Column(name = "payment_id", unique = true)
+    private String paymentId;
+
+    // Amount paid by the student (in rupees)
+    @Column(name = "amount_paid", nullable = false)
+    private int amountPaid;
+
+    // Date of payment
+    @Column(name = "payment_date")
+    private LocalDate date;
+
+    // Relationship with Student entity
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id", nullable = false)
+    private Student student;
+}
