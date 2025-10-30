@@ -21,6 +21,10 @@ public class RoomReview {
     @JoinColumn(name = "room_no", nullable = false)
     private Room room;
 
+    @ManyToOne
+    @JoinColumn(name = "student", nullable = false)
+    private Student student;
+
     @NotNull
     private Long studentId; // You can map to Student later if needed
 
